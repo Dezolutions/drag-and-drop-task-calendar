@@ -1,14 +1,15 @@
+import { gridStyle, weekDayStyle } from "../stylesComponents"
 
 const DayNames = () => {
   return (
-    <div className="week">
-      <div className='week-day'>Sun</div>
-      <div className='week-day'>Mon</div>
-      <div className='week-day'>Tue</div>
-      <div className='week-day'>Wed</div>
-      <div className='week-day'>Thu</div>
-      <div className='week-day'>Fri</div>
-      <div className='week-day'>Sat</div>
+    <div css={gridStyle}>
+      <div css={weekDayStyle}>Sun</div>
+      <div css={weekDayStyle}>Mon</div>
+      <div css={weekDayStyle}>Tue</div>
+      <div css={weekDayStyle}>Wed</div>
+      <div css={weekDayStyle}>Thu</div>
+      <div css={weekDayStyle}>Fri</div>
+      <div css={weekDayStyle}>Sat</div>
     </div>
   )
 }

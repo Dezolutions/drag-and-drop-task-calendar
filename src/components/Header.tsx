@@ -1,6 +1,6 @@
 import dayjs from "dayjs"
 import {useDateStore} from '../store'
-
+import { headerStyle} from '../stylesComponents'
 const Header :React.FC = () => {
   const {setCurrentMonthIndex, currentMonthIndex} = useDateStore()
   const onNext = () => {
@@ -10,7 +10,7 @@ const Header :React.FC = () => {
     setCurrentMonthIndex(-1)
   }
   return (
-    <header className="header">
+    <header css={headerStyle}>
       <h1>Task Calendar</h1>
       <div>Download calendar image</div>
       <div>Import</div>
@@ -21,8 +21,6 @@ const Header :React.FC = () => {
       <div>
         <button onClick={onPrev}>Prev</button>
         <button onClick={onNext}>Next</button>
-        <button>Month</button>
-        <button>Week</button>
       </div>
     </header>
   )

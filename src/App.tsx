@@ -1,12 +1,12 @@
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Month from "./components/Month";
+import { mainStyle } from "./stylesComponents";
 
 const App : React.FC = () => {
   const handleFileRead = (event: any) => {
     const content = event.target.result;
     console.log('File content:', content);
-    // Perform further operations with the file content
   };
   const handleFileUpload = (event: any) => {
     const file = event.target.files[0];
@@ -20,7 +20,7 @@ const App : React.FC = () => {
     <div>
       <input type="file" onChange={handleFileUpload} />
       <Header/>
-      <main className="main">
+      <main css={mainStyle}>
         <Sidebar/>
         <Month/>
       </main>

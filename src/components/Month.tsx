@@ -1,28 +1,34 @@
 import React from 'react'
 import {getMonth} from '../utils/getMonth'
 import DayNames from './DayNames'
-import dayjs from 'dayjs'
-import classNames from 'classnames'
 import {useDateStore} from '../store'
+import {useEffect} from 'react'
+import { gridStyle } from '../stylesComponents'
+import CalendarItem from './CalendarItem'
+import EventModal from './EventModal'
 
 const Month = () => {
-  const {currentMonthIndex} = useDateStore()
+  const {currentMonthIndex, isModalCreateOpen} = useDateStore()
   const [currentMonth, setCurrentMonth] = React.useState(getMonth(currentMonthIndex))
-  console.log(currentMonth)
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(currentMonthIndex));
+  }, [currentMonthIndex]);
+
   return (
     <div>
+      {isModalCreateOpen && <EventModal/>}
       <DayNames/>
-      <div className='calendar'>
+      <div css={gridStyle}>
         {currentMonth && currentMonth.map((week: any, index: number) => (
           <React.Fragment key={index}>
-            {week.map((day: any, i: number) => (
-              <div className={classNames('day', {
-                  'current-day': day.format('DD') === dayjs().format('DD'),
-                  'previous-month-day': index === 0 && +day.format('DD') !== 1,
-                })} key={i}
-              >
-                <p className='day-number'>{day.format('DD')}</p>
-              </div>
+            {week.map((day: any) => (
+              <CalendarItem 
+                key={day.format('DD')} 
+                day={day.format('DD')}
+                dayMonth={day.format('MM')} 
+                index={index}
+              />
             ))}
           </React.Fragment>
         ))}

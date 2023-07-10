@@ -9,7 +9,7 @@ const Sidebar = () => {
       <Search />
       <p>Labels:</p>
       <div className="label-item">
-        {labels && labels.map((label) => <p key={label}>{label}</p>)}
+        {labels && labels.map((label) => <p key={label.name}>{label.name}</p>)}
       </div>
       <button>Create Label</button>
       <button>Edit Labels</button>

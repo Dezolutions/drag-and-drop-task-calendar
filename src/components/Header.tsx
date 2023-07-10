@@ -1,6 +1,9 @@
 import dayjs from "dayjs"
 import {useDateStore} from '../store'
-import { headerStyle} from '../stylesComponents'
+import { downloadBtnStyle, headerCenterStyle, headerContentStyle, headerLeftStyle, headerRightStyle, headerStyle, headerTitleStyle, switchMonthBtnStyle} from '../stylesComponents'
+import {TbFileExport, TbFileImport} from 'react-icons/tb'
+import {FaChevronLeft, FaChevronRight} from 'react-icons/fa'
+import Container from "./Container"
 const Header :React.FC = () => {
   const {setCurrentMonthIndex, currentMonthIndex} = useDateStore()
   const onNext = () => {
@@ -11,17 +14,28 @@ const Header :React.FC = () => {
   }
   return (
     <header css={headerStyle}>
-      <h1>Task Calendar</h1>
-      <div>Download calendar image</div>
-      <div>Import</div>
-      <div>Export</div>
-      {dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
-          "MMMM YYYY"
-        )}
-      <div>
-        <button onClick={onPrev}>Prev</button>
-        <button onClick={onNext}>Next</button>
-      </div>
+      <Container>
+          <div css={headerContentStyle}>
+            <div css={headerLeftStyle}>
+              <h1 css={headerTitleStyle}>Task Calendar</h1>
+              <button css={downloadBtnStyle}>Download calendar image</button>
+            </div>
+            <div css={headerCenterStyle}>
+              <button css={switchMonthBtnStyle} onClick={onPrev}><FaChevronLeft/></button>
+              <button css={switchMonthBtnStyle} onClick={onNext}><FaChevronRight/></button>
+              <p>
+                {dayjs(new Date(dayjs().year(), currentMonthIndex)).format(
+                  "MMMM YYYY"
+                )}
+              </p> 
+            </div>
+            <div css={headerRightStyle}>
+              <div>Import <TbFileImport/></div>
+              <div>Export <TbFileExport/></div>
+              
+            </div>
+          </div>
+      </Container>
     </header>
   )
 }

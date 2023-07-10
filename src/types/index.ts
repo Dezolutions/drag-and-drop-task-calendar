@@ -3,10 +3,15 @@ export interface Day {
   tasks: [];
 }
 
-export interface Task {
+export interface TaskInterface {
   id: string;
   date: string;
   title: string;
-  labels: string[];
+  labels: Label[];
+  color: string;
+}
+
+export interface Label {
+  name: string;
   color: string;
 }

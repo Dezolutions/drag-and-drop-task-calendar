@@ -1,8 +1,9 @@
 
 import { useDateStore } from "../store"
-import { dayNumberStyle, dayStyle } from "../stylesComponents"
+import { dayNumberStyle, dayStyle, moreTasksMessageStyle, tasksBlockStyle } from "../stylesComponents"
 import dayjs from 'dayjs'
 import React from "react"
+import Task from "./Task"
 interface CalendarItemProps {
   day: string
   dayMonth: string
@@ -19,10 +20,24 @@ const CalendarItem :React.FC<CalendarItemProps> = React.memo(({day,dayMonth, ind
     setIsModalCreateOpen(true)
     setDataForModal(`${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format(  "MMMM YYYY")}  `)
   }
+  const onMoreTasksClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation()
+    console.log('more tasks')
+  }
   return (
     <div onClick={onTaskCreate} css={dayStyle(isCurrentDay, isPreviousMonthDay)}>
       <p css={dayNumberStyle}>{day}</p>
-      <div>{filteredTasks &&  filteredTasks.map((task) => <p key={task.id}>{task.labels}</p>)}</div>
+      <div css={tasksBlockStyle}>
+        {
+          filteredTasks &&  filteredTasks.slice(0,3).map((task) => 
+            <Task key={task.id} {...task}/>
+          )
+          
+        }
+        {filteredTasks && filteredTasks.length > 3 && (
+      <p css={moreTasksMessageStyle} onClick={onMoreTasksClick}>+{filteredTasks.length - 3} more</p>
+    )}
+      </div>
     </div>
   )
 })

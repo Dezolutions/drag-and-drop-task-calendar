@@ -6,7 +6,6 @@ const Task : React.FC<TaskInterface> = ({title, labels, color}) => {
   
   const onTaskClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
-    console.log('task')
   }
   
   return (

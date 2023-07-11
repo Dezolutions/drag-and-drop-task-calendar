@@ -1,5 +1,5 @@
 import React,{ useState } from "react"
-import { LabelsPlaceholderStyle, addedLabelBtnStyle, addedLabelStyle, modalBtnCloseStyle, modalDateStyle, modalInputStyle, modalLabelBlockStyle, modalLabelStyle, modalLabelsInputStyle, modalLabelsStyle, modalSaveBtnStyle, modalStyle, modalWrapperStyle } from "../stylesComponents"
+import { LabelsPlaceholderStyle, addedLabelBtnStyle, addedLabelStyle, modalBtnCloseStyle, modalDateStyle, modalInputStyle, modalLabelBlockStyle, modalLabelStyle, modalLabelsInputStyle, modalLabelsStyle, mainBtnStyle, modalStyle, modalWrapperStyle } from "../stylesComponents"
 import { useDateStore } from "../store"
 import {IoClose} from 'react-icons/io5'
 import {BiCalendar} from 'react-icons/bi'
@@ -74,7 +74,7 @@ const EventModal = () => {
             </button>
           )}
         </div>
-        <button css={modalSaveBtnStyle} onClick={onCreateTask}>Save</button>
+        <button css={mainBtnStyle} onClick={onCreateTask}>Save</button>
         <button css={modalBtnCloseStyle} onClick={onCloseModal}><IoClose fontSize={26}/></button>
       </div>
     </div>

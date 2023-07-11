@@ -1,18 +1,23 @@
 import { useDateStore } from "../store"
+import { sidebarStyle } from "../stylesComponents"
+import { Label } from "../types"
 import Search from "./Search"
+import SidebarLabel from "./SidebarLabel"
+import React from "react"
+import LabelCreate from "./LabelCreate"
 
-const Sidebar = () => {
+const Sidebar :React.FC = () => {
   const {labels} = useDateStore()
+
   return (
-    <div>
+    <div css={sidebarStyle}>
       <p>Filter tasks:</p>
       <Search />
       <p>Labels:</p>
       <div className="label-item">
-        {labels && labels.map((label) => <p key={label.name}>{label.name}</p>)}
+        {labels && labels.map((label: Label) => <SidebarLabel key={label.name} {...label} /> )}
       </div>
-      <button>Create Label</button>
-      <button>Edit Labels</button>
+      <LabelCreate/>
     </div>
   )
 }

@@ -13,9 +13,11 @@ interface CalendarItemProps {
 const CalendarItem :React.FC<CalendarItemProps> = React.memo(({day,dayMonth, index}) => {
   const isCurrentDay = day === dayjs().format('DD');
   const isPreviousMonthDay = (index === 0 && +day > 7) || (index === 4 && +day < 23);
-  const {setIsModalCreateOpen, setDataForModal, tasks} = useDateStore()
-  const filteredTasks = tasks.filter((task) => task.date === `${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format(  "MMMM YYYY")}  `)
-
+  const {setIsModalCreateOpen, setDataForModal, tasks, searchValue} = useDateStore()
+  const filteredTasks = tasks
+    .filter((task) => task.date === `${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format(  "MMMM YYYY")}  `)
+    .filter((task) => task.title.toLowerCase().includes(searchValue.toLowerCase()))
+ 
   const onTaskCreate = () => {
     setIsModalCreateOpen(true)
     setDataForModal(`${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format(  "MMMM YYYY")}  `)

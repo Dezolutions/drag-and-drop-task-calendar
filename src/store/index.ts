@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import {create} from 'zustand'
-import { Label, TaskInterface } from '../types';
+import { DataForModalInterface, Label, TaskInterface } from '../types';
 
 interface DateStore {
 
@@ -8,15 +8,16 @@ interface DateStore {
   setCurrentMonthIndex: (index: number) => void;
 
   tasks: TaskInterface[];
+  setTasks: (tasks: TaskInterface[]) => void;
   createTask: (task: TaskInterface) => void;
-  editTask: (id: string) => void;
+  editTask: (id: TaskInterface) => void;
   deleteTask: (id: string) => void;
 
   isModalCreateOpen: boolean;
   setIsModalCreateOpen: (value: boolean) => void;
 
-  dataForModal: string;
-  setDataForModal: (value: string) => void;
+  dataForModal: DataForModalInterface;
+  setDataForModal: (value: DataForModalInterface) => void;
 
   labels: Label[];
   
@@ -34,8 +35,8 @@ export const useDateStore = create<DateStore>((set) => ({
     {id: 'defaultlabel3', name: 'Feature', color: '0, 150, 207'},
     {id: 'defaultlabel4', name: 'Bug', color: '255, 59, 48' }
   ],
-  addLabel: (label: Label) => set((state: any) => ({labels: [...state.labels, label]})),
-  editLabel: (id: string, name: string, color: string,) => set((state: any) => ({labels: state.labels.map((item: Label) => {
+  addLabel: (label: Label) => set((state) => ({labels: [...state.labels, label]})),
+  editLabel: (id: string, name: string, color: string,) => set((state) => ({labels: state.labels.map((item: Label) => {
     if(item.id === id) {
       item.color = color;
       item.name = name; 
@@ -43,19 +44,27 @@ export const useDateStore = create<DateStore>((set) => ({
     return item;
   })})),
 
-  dataForModal: '',
-  setDataForModal: (value: string) => set(() => ({dataForModal: value})),
+  dataForModal: {id: '', date: '', title: '', labels: [], index: 0},
+  setDataForModal: (value: DataForModalInterface) => set(() => ({dataForModal: {...value}})),
 
   isModalCreateOpen: false,
   setIsModalCreateOpen: (value: boolean) => set(() => ({isModalCreateOpen: value})),
 
   currentMonthIndex: dayjs().month(),
-  setCurrentMonthIndex: (index: any) => set((state: any) => ({currentMonthIndex: state.currentMonthIndex + index})),
+  setCurrentMonthIndex: (index: any) => set((state) => ({currentMonthIndex: state.currentMonthIndex + index})),
   
   tasks: [],
-  createTask: (task: TaskInterface) => set((state: any) => ({tasks: [...state.tasks, task]})),
-  editTask: (id: string) => set((state: any) => ({tasks: state.tasks.map((task: TaskInterface) => task.id === id)})),
-  deleteTask: (id: string) => set((state: any) => ({tasks: state.tasks.filter((task: TaskInterface) => task.id !== id)})),
+  setTasks: (tasks: TaskInterface[]) => set(() => ({tasks})),
+  createTask: (task: TaskInterface) => set((state) => ({tasks: [...state.tasks, task]})),
+  editTask: (task: TaskInterface) => set((state) => ({
+    tasks: state.tasks.map((taskItem: TaskInterface) => {
+      if(taskItem.id === task.id) {
+        return task
+      }
+      return taskItem
+    })
+  })),
+  deleteTask: (id: string) => set((state) => ({tasks: state.tasks.filter((task: TaskInterface) => task.id !== id)})),
 
   searchValue: '',
   setSearchValue: (value: string) => set(() => ({searchValue: value})),

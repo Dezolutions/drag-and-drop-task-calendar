@@ -1,12 +1,12 @@
 import { DebounceInput } from "react-debounce-input"
 import { searchInputStyle } from "../stylesComponents"
-import React from "react"
+import {useState} from "react"
 import { useDateStore } from "../store"
 
 const Search = () => {
 
   const {setSearchValue} = useDateStore()
-  const [search, setSearch] = React.useState('')
+  const [search, setSearch] = useState('')
 
   const handleSearch = (e: any) => {
     setSearch(e.target.value)

@@ -128,7 +128,7 @@ export const modalStyle = css({
 });
 export const modalLabelsInputStyle = css({
   width: '100%',
-  height: '38px',
+  minHeight: '38px',
   outline: 'none',
   display: 'flex',
   gap: '5px',
@@ -356,4 +356,13 @@ export const sidebarLabelInputStyle = css({
   backgroundColor: 'transparent',
   fontSize: '15px',
   width: '160px'
+});
+
+export const fileStyle = css({
+  cursor: 'pointer',
+  borderRadius: '3px',
+  padding: '1px',
+  '&:hover': {
+    backgroundColor: 'rgba(0,0,0,0.1)',
+  }
 });

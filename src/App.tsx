@@ -1,33 +1,41 @@
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
-import Month from "./components/Month";
+import Calendar from "./components/Calendar";
 import { mainStyle } from "./stylesComponents";
 import Container from "./components/Container";
+import { toJpeg } from "html-to-image";
+import { useRef, useCallback } from "react";
 
 const App : React.FC = () => {
-  const handleFileRead = (event: any) => {
-    const content = event.target.result;
-    console.log('File content:', content);
-  };
-  const handleFileUpload = (event: any) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = handleFileRead;
-      reader.readAsText(file);
+
+  const ref = useRef<HTMLDivElement>(null);
+  const onButtonClick = useCallback(() => {
+    if (ref.current === null) {
+      return
     }
-  };
+
+    toJpeg(ref?.current, { cacheBust: true, })
+      .then((dataUrl) => {
+        const link = document.createElement('a')
+        link.download = 'calendar.png'
+        link.href = dataUrl
+        link.click()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [ref])
+
   return (
-    <div>
-      {/* <input type="file" onChange={handleFileUpload} /> */}
-      <Header/>
+    <>
+      <Header onClick={onButtonClick}/>
       <Container>
         <main css={mainStyle}>
           <Sidebar/>
-          <Month/>
+          <Calendar refLink={ref}/>
         </main>
       </Container>
-    </div>
+    </>
   )
 }
 

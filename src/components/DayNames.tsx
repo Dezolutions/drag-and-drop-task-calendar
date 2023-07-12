@@ -1,6 +1,6 @@
 import { gridStyle, weekDayStyle } from "../stylesComponents"
 
-const DayNames = () => {
+const DayNames : React.FC = () => {
   return (
     <div css={gridStyle}>
       <div css={weekDayStyle}>Sun</div>

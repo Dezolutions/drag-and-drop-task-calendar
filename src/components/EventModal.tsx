@@ -1,4 +1,4 @@
-import React,{ useState } from "react"
+import React from "react"
 import { LabelsPlaceholderStyle, addedLabelBtnStyle, addedLabelStyle, modalBtnCloseStyle, modalDateStyle, modalInputStyle, modalLabelBlockStyle, modalLabelStyle, modalLabelsInputStyle, modalLabelsStyle, mainBtnStyle, modalStyle, modalWrapperStyle } from "../stylesComponents"
 import { useDateStore } from "../store"
 import {IoClose} from 'react-icons/io5'
@@ -7,10 +7,10 @@ import {BsFillBookmarkFill} from 'react-icons/bs'
 import { Label } from "../types"
 
 const EventModal = () => {
+  const {setIsModalCreateOpen, dataForModal, createTask, labels, editTask} = useDateStore()
   const id = React.useId()
-  const [title, setTitle] = useState<string>('')
-  const [labelInput, setLabelInput] = useState<Label[]>([])
-  const {setIsModalCreateOpen, dataForModal, createTask, labels} = useDateStore()
+  const [title, setTitle] = React.useState<string>(dataForModal?.title ||'')
+  const [labelInput, setLabelInput] = React.useState<Label[]>(dataForModal?.labels ||[])
 
   const onLabelClick = (label: Label): void => {
     if (!labelInput.find((item) => item.name === label.name)) {
@@ -31,13 +31,25 @@ const EventModal = () => {
     setIsModalCreateOpen(false)
   }
   const onCreateTask = () => {
-    createTask({
-      id: id,
-      date: dataForModal,
-      title: title,
-      labels: labelInput,
-      color: '96, 107, 110',
-    })
+    if(dataForModal?.id) {
+      editTask({
+        id: dataForModal?.id,
+        date: dataForModal?.date,
+        title: title,
+        labels: labelInput,
+        color: '96, 107, 110',
+        index: dataForModal?.index
+      })
+    } else {
+      createTask({
+        id: id,
+        date: dataForModal?.date,
+        title: title,
+        labels: labelInput,
+        color: '96, 107, 110',
+        index: dataForModal?.index
+      })
+    }
     setIsModalCreateOpen(false)
   }
   return (
@@ -46,7 +58,7 @@ const EventModal = () => {
         <input css={modalInputStyle} type="text" placeholder="Add title" value={title} onInput={onInputEvent} />
         <div css={modalDateStyle}>
           <p><BiCalendar fontSize={25}/></p>
-          <p>{dataForModal}</p>
+          <p>{dataForModal?.date}</p>
         </div>
         <div css={modalLabelsStyle}>
           <p><BsFillBookmarkFill fontSize={25}/></p>

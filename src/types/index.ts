@@ -12,6 +12,9 @@ export interface TaskInterface {
   color: string;
 }
 
+export interface TaskProps extends TaskInterface {
+  indexItem: number
+}
 export interface Label {
   id: string;
   name: string;

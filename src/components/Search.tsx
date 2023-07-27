@@ -1,14 +1,16 @@
 import { DebounceInput } from "react-debounce-input"
 import { searchInputStyle } from "../stylesComponents"
-import {useState} from "react"
+import React from "react"
 import { useDateStore } from "../store"
 
-const Search = () => {
+const Search :React.FC = () => {
 
   const {setSearchValue} = useDateStore()
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = React.useState<string>('')
+  console.log(search)
 
   const handleSearch = (e: any) => {
+    console.log(e.target.value)
     setSearch(e.target.value)
     setSearchValue(e.target.value)
   }
@@ -18,7 +20,7 @@ const Search = () => {
     <>
       <DebounceInput
         css={searchInputStyle}
-        minLength={2}
+        minLength={1}
         debounceTimeout={300}
         placeholder="Enter task title..."
         type="text"

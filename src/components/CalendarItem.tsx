@@ -1,9 +1,11 @@
 import React from 'react'
 import { useDateStore } from "../store"
-import { dayNumberStyle, dayStyle, moreTasksMessageStyle, tasksBlockStyle } from "../stylesComponents"
+import { dayNumberStyle, dayStyle, moreTasksMessageStyle, taskCreateBtnStyle, tasksBlockStyle } from "../stylesComponents"
 import dayjs from 'dayjs'
 import Task from "./Task"
 import { Droppable } from "react-beautiful-dnd"
+import { AiOutlinePlus } from 'react-icons/ai'
+import TaskEditor from './TaskEditor'
 interface CalendarItemProps {
   day: string
   dayMonth: string
@@ -14,12 +16,13 @@ const CalendarItem :React.FC<CalendarItemProps> = React.memo(({day,dayMonth, ind
   const isCurrentDay = day === dayjs().format('DD');
   const isPreviousMonthDay = (index === 0 && +day > 7) || (index === 4 && +day < 23);
   const {setIsModalCreateOpen, setDataForModal, tasks, searchValue} = useDateStore()
+  const [tasksModalOpen, setTasksModalOpen] = React.useState<boolean>(false)
 
   const filteredTasks = tasks.filter((task) =>
     task.date === `${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format("MMMM YYYY")}` &&
     task.title.toLowerCase().includes(searchValue.toLowerCase())
   ).sort((a, b) => a.index - b.index);
-  console.log(filteredTasks)
+
   const onTaskCreate = () => {
     setIsModalCreateOpen(true)
     setDataForModal({date: `${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format(  "MMMM YYYY")}`, index: filteredTasks.length})
@@ -27,11 +30,14 @@ const CalendarItem :React.FC<CalendarItemProps> = React.memo(({day,dayMonth, ind
   const onMoreTasksClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation()
     console.log('more tasks')
+    setTasksModalOpen(true)
   }
   return (
-    <div onClick={onTaskCreate} css={dayStyle(isCurrentDay, isPreviousMonthDay)}>
+    <div css={dayStyle(isCurrentDay, isPreviousMonthDay)}>
+      {tasksModalOpen && <TaskEditor {...filteredTasks}/>}
       <p css={dayNumberStyle}>{day}</p>
-        <Droppable droppableId={day}>
+      <button onClick={onTaskCreate} css={taskCreateBtnStyle} ><AiOutlinePlus/></button>
+        <Droppable droppableId={`${day} ${dayjs(new Date(dayjs().year(), +dayMonth - 1)).format("MMMM YYYY")}`}>
           {(provided) =>
             <div css={tasksBlockStyle} ref={provided.innerRef} {...provided.droppableProps}>
               {

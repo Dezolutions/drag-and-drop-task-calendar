@@ -103,7 +103,22 @@ export const dayNumberStyle = css({
   top: '1px',
   right: '2px',
 });
-
+export const taskCreateBtnStyle = css({
+  position: 'absolute',
+  top: '5px',
+  left: '5px',
+  backgroundColor: 'transparent',
+  border: 'none',
+  outline: 'none',
+  cursor: 'pointer',
+  color: 'black',
+  fontSize: '15px',
+  borderRadius: '3px',
+  lineHeight: '13px',
+  '&:hover': {
+    backgroundColor: 'rgb(249, 186, 70, 0.5)',
+  }
+});
 export const weekDayStyle = css({
   display: 'flex',
   justifyContent: 'center',
@@ -256,7 +271,8 @@ export const tasksBlockStyle = css({
 
 });
 export const taskStyle = (color: string) => css`
-  display: flex;
+  display: grid;
+  grid-template-columns: 10px 1fr 20px;
   align-items: center;
   margin: 1px 0;
   gap: 5px;
@@ -272,7 +288,36 @@ export const taskStyle = (color: string) => css`
     background-color: rgba(${color}, 1);
   }
 `;
+export const taskOpenBtnStyle = css({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  border: 'none',
+  backgroundColor: 'transparent',
+  cursor: 'pointer',
+  outline: 'none',
+  '&:hover': {
+    backgroundColor: 'rgba(0,0,0,0.2)',
+  }
+});
 
+export const tasksModalStyle = css({
+  position: 'absolute',
+  backgroundColor: 'white',
+  width: '400px',
+  height: 'auto',
+  zIndex: 100,
+  boxSizing: 'border-box',
+  padding: '20px',
+  borderRadius: '3px',
+  boxShadow: '0px 0px 85px -28px rgba(0,0,0,0.75)',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '10px',
+});
 export const moreTasksMessageStyle = css({
   fontSize: '10px',
   margin: '5px 0 0 5px',

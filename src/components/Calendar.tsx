@@ -9,6 +9,7 @@ import { DragDropContext } from 'react-beautiful-dnd'
 import { TaskInterface } from '../types'
 
 const Calendar :React.FC<{refLink: React.RefObject<any>}> = ({refLink}) => {
+  
   const {currentMonthIndex, isModalCreateOpen, tasks, editTask} = useDateStore()
   const [currentMonth, setCurrentMonth] = React.useState(getMonth(currentMonthIndex))
 
@@ -17,20 +18,22 @@ const Calendar :React.FC<{refLink: React.RefObject<any>}> = ({refLink}) => {
   }, [currentMonthIndex]);
 
   function handleOnDragEnd(result: any) {
-    console.log(result)
     if (!result.destination) return;
-    if(result.destination.droppableId !== result.source.droppableId) {
-      const task : TaskInterface[] = tasks.filter((task) => task.id === result.draggableId)
-      editTask({
-        id: task[0].id,
-        title: task[0].title,
-        labels: task[0].labels,
-        date: `${result.destination.droppableId} ${task[0].date.split(' ')[1]} ${task[0].date.split(' ')[2]}`,
-        color: task[0].color,
-        index: result.destination.index
-      })
-    } else {
-    }
+
+      const task : TaskInterface[] = tasks.filter((task: TaskInterface) => task.id === result.draggableId)
+      const filteredTasks : TaskInterface[] = tasks.filter((task: TaskInterface) => task.date == result.destination.droppableId && task.id !== result.draggableId)
+      filteredTasks.splice(result.destination.index, 0, task[0])
+      filteredTasks.map((taskItem: TaskInterface, index: number) => {
+        editTask({
+          id: taskItem.id,
+          title: taskItem.title,
+          labels: taskItem.labels,
+          date: result.destination.droppableId,
+          color: taskItem.color,
+          index: index
+        })
+      }) 
+
 
   }
 

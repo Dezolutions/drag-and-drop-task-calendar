@@ -9,4 +9,61 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+* {
+  margin: 0;
+  padding: 0;
+}
+.header {
+  color: white;
+  display: flex;
+  align-items: baseline;
+  background-color: orange;
+  padding-bottom: 20px;
+}
+.main {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+.calendar,
+.week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+.day {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  background-color: #E2E6E9;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+.day-number {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+}
+.current-day {
+  background-color: rgb(249, 186, 70);
+  color: white;
+}
+.previous-month-day {
+  background-color: #fafafa;
+  color: #b8b8b8;
+}
+.week-day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  height: 30px;
+  background-color: #b8b8b8;
+  margin-bottom: 3px;
+}
+.day:hover {
+  background-color: #eee;
+
+}
 

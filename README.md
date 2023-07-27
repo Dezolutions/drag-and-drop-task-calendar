@@ -17,5 +17,5 @@ Only for large devices(mobile version coming soon)
 1. Search bar isnt completely work properly.
 2. Drag and drop causes visual bug sometime for some reason 
 
-## Deploy:
-https://drag-drop-task-calendar.netlify.app/
+## Deploy: https://drag-drop-task-calendar.netlify.app/
+

@@ -1,5 +1,6 @@
 # Task calendar
 Only for large devices(mobile version coming soon)
+
 ![calendar](https://github.com/Dezolutions/drag-and-drop-task-calendar/assets/58999293/b9ae2d6d-f0a2-495e-b2ac-833e2227ff2b)
 
 ### Features:
